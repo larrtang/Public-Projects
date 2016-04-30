@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="lanco.homeworkplanner.MainActivity">
+    <!--
+    <item
+        android:id="@+id/calendar"
+        android:title="Calendar"
+        app:showAsAction="always"
+        android:icon="@drawable/google"/>
+        -->
+
+    <item
+        android:id="@+id/about"
+        android:title="About"
+        android:orderInCategory="99"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_delete2"
+        android:orderInCategory="100"
+        android:title="Delete All Tasks"
+        app:showAsAction="never" />
+</menu>

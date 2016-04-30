@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lanco.homeworkplanner.EventInfoActivity"
+    android:theme="@style/AppTheme.NoActionBar"
+    android:background="#f2f2f2"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#f6f6f6">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_info"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+
+
+        android:background="#f6f6f6"
+        android:clickable="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#ffffff"
+            android:elevation="8dp"
+            android:layout_margin="16dp"
+            android:id="@+id/relativeLayout">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:text="Description"
+                android:id="@+id/textView4"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/eventDescriptionTextView"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="(No Description)"
+                android:id="@+id/eventDescriptionTextView"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentStart="true"
+                android:textColor="#000000"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deadline"
+                android:id="@+id/textView3"
+                android:textSize="12sp"
+                android:layout_marginLeft="4dp"
+                android:layout_below="@+id/eventDescriptionTextView"
+                android:layout_alignStart="@+id/eventDescriptionTextView"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jan 1, 2016"
+                android:id="@+id/dueDateTextView"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_below="@+id/textView3"
+                android:layout_marginBottom="8dp"
+                android:layout_alignStart="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Time Needed"
+                android:id="@+id/textView5"
+                android:textSize="12sp"
+                android:layout_alignStart="@+id/dueDateTextView"
+                android:layout_below="@id/dueDateTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hour"
+                android:id="@+id/timeNeededTextView"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+
+                android:layout_below="@id/textView5"
+                android:layout_alignStart="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Priority"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="12sp"
+                android:id="@+id/textView6"
+                android:layout_alignStart="@+id/timeNeededTextView"
+                android:layout_below="@id/timeNeededTextView" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/importanceRatingBar"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:layout_below="@+id/textView6"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Real Priority"
+                android:textSize="12sp"
+                android:layout_below="@id/importanceRatingBar"
+                android:layout_alignStart="@+id/importanceRatingBar"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/textView10"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView10"
+                android:layout_alignStart="@id/textView10"
+                android:text="0.000"
+                android:textSize="16sp"
+                android:id="@+id/realPriorityTextView"
+                android:layout_alignParentStart="false"
+                android:layout_marginBottom="32dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageViewDeadline"
+                android:src="@drawable/ic_create_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignBottom="@+id/dueDateTextView"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_subject_white_48dp"
+                android:tint="#737373"
+                android:layout_alignTop="@+id/eventDescriptionTextView"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="8dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageView3"
+                android:src="@drawable/ic_event_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignTop="@+id/imageViewDeadline"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="8dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageView4"
+                android:src="@drawable/ic_update_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignBottom="@+id/timeNeededTextView"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="8dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageView5"
+                android:src="@drawable/ic_star_half_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignTop="@+id/importanceRatingBar"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="8dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageView6"
+                android:src="@drawable/ic_linear_scale_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignBottom="@+id/realPriorityTextView"
+                android:layout_alignStart="@+id/imageView5" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageViewNeeded"
+                android:src="@drawable/ic_create_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignBottom="@+id/timeNeededTextView"
+                android:layout_alignStart="@+id/imageViewDeadline" />
+
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+    </LinearLayout>
+
+        <FrameLayout
+           android:layout_width="match_parent"
+           android:layout_height="40dp"
+           android:background="#ffffff"
+           android:layout_alignParentBottom="true"
+           android:elevation="16dp">
+
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Task Finished"
+               android:id="@+id/finishButton"
+               android:gravity="center_vertical|right"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentEnd="true"
+               android:padding="0dp"
+               style="?android:attr/borderlessButtonStyle"
+
+               android:paddingEnd="4dp"
+               android:paddingStart="4dp"
+               android:layout_gravity="right|center_vertical" />
+
+       </FrameLayout>
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/relativeLayout"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginRight="32dp"
+        android:id="@+id/fabCalendar"
+        android:src="@drawable/calendar_plus" />
+
+</android.support.design.widget.CoordinatorLayout>

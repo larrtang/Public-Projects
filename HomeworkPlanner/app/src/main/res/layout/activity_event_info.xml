@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lanco.homeworkplanner.EventInfoActivity"
+    android:theme="@style/AppTheme.NoActionBar"
+    android:background="#f2f2f2"
+    android:fitsSystemWindows="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_info"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+        </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+
+        android:background="#ffffff">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:text="Description"
+                android:id="@+id/textView4"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="(No Description)"
+                android:id="@+id/eventDescriptionTextView"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentStart="true"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_below="@id/eventDescriptionTextView"
+                android:id="@+id/view1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deadline"
+                android:id="@+id/textView3"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_below="@id/view1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jan 1, 2016"
+                android:id="@+id/dueDateTextView"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_below="@+id/textView3"
+                android:layout_marginBottom="8dp"
+                android:layout_alignStart="@+id/textView3" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                android:layout_below="@id/dueDateTextView"
+                android:id="@+id/view6"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Time Needed"
+                android:id="@+id/textView5"
+                android:textSize="12sp"
+                android:layout_below="@+id/view6"
+                android:layout_alignStart="@+id/dueDateTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 hour"
+                android:id="@+id/timeNeededTextView"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"
+
+                android:layout_below="@id/textView5"
+                android:layout_alignStart="@+id/textView5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/timeNeededTextView"
+                android:background="@android:color/darker_gray"
+                android:id="@+id/view7"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Priority"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="12sp"
+                android:id="@+id/textView6"
+                android:layout_below="@+id/view7"
+                android:layout_alignStart="@+id/timeNeededTextView" />
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/importanceRatingBar"
+                android:layout_alignTop="@+id/textView6"
+                android:layout_centerHorizontal="true"
+                android:isIndicator="true"
+                android:numStars="5" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/imageViewDeadline"
+                android:src="@drawable/ic_create_white_48dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:foregroundTint="@android:color/darker_gray"
+                android:tint="#737373"
+                android:layout_alignBottom="@+id/dueDateTextView"
+                android:layout_alignParentEnd="true" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finished  "
+        android:id="@+id/finishButton"
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical|right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:padding="0dp"
+        android:background="#ffffff" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_above="@id/finishButton"/>
+
+
+
+
+
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
