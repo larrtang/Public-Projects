@@ -11,8 +11,8 @@
     <string name="title_activity_settings">Settings</string>
     <string name="app_info">This app manages tasks and events such as homework and studying and prioritizes the order of completion.
                             \n\nBased on deadlines, time needed, and the importance of tasks, this app arranges the most important task first.</string>
-    <string name="build_version">1.2.3 B</string>
-    <string name="build_date">1/15/2016</string>
+    <string name="build_version">1.2.6 B</string>
+    <string name="build_date">5/20/2016</string>
 
     <!-- Strings related to Settings -->
 

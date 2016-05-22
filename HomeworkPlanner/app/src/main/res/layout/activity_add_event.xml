@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Task Name"
                 android:ems="10"
-                android:textSize="24sp"
+                android:textSize="32sp"
                 android:inputType="textCapWords"
                 android:id="@+id/eventNameEditText"
                 android:layout_alignParentTop="true"
