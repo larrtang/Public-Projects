@@ -168,9 +168,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
         addEventsToListView();
     }
 
-    public void getUpdatedEvent() {
 
-    }
 
     public void openEventInfo(Event selectedEvent, int position) {
         Intent intent = new Intent(MainActivity.this, EventInfoActivity.class);
