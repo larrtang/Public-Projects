@@ -1,4 +1,17 @@
 #include "Matrix.h"
+//Matrix::Matrix () {
+//	matrixArray = (double*) malloc (sizeof(double) * 0);
+//	row = 0;
+//	col = 0;
+//	length = 0;
+//}
+
+//Matrix::Matrix (const Matrix& m) {
+//	matrixArray = m.getArray();
+//	row = m.getRow();
+//	col = m.getCol();
+//	length = m.getRow()*m.getCol();
+//}
 
 Matrix::Matrix (int x, int y) {
 	matrixArray = (double*) malloc (sizeof(double) * x * y);
@@ -50,9 +63,23 @@ void Matrix::setValue (int i, double value) {
 	matrixArray[i] = value;
 }
 
+int Matrix::getRow () {return this->row;}
+int Matrix::getCol () {return this->col;}
+int Matrix::getLength () {return this->length;}
+
 double * Matrix::getArray () {return matrixArray;}
 
-Matrix Matrix::operator + (Matrix& matrix) {
+Matrix Matrix::transpose (Matrix matrix) {
+	Matrix newMatrix (matrix.getCol(), matrix.getRow());
+	for (int i = 0; i < matrix.getRow(); i++) {
+		for (int j = 0; j < matrix.getCol(); j++) {
+			newMatrix.setValue(j,i, matrix.getValue(i,j));
+		}
+	}
+	return newMatrix;
+}
+
+Matrix Matrix::operator + ( Matrix& matrix) {
 	
 	//check if the matrices are the same size
 	if (this->row != matrix.row || this->col != matrix.col) {
@@ -70,7 +97,7 @@ Matrix Matrix::operator + (Matrix& matrix) {
 	return newMatrix;
 }
 
-Matrix Matrix::operator * (Matrix& matrix) {
+Matrix Matrix::operator * ( Matrix& matrix) {
 	
 	//check if the matrices are compatible
 	if (this->col != matrix.row) {
