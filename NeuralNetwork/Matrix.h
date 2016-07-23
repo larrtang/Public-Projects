@@ -14,7 +14,7 @@ class Matrix {
 		int length;
 		
 	public:
-		//Matrix ();
+		Matrix ();
 		//Matrix (Matrix& m);
 		Matrix (int x, int y);
 		Matrix (int x, int y, double * array);		//if chooses to initialized with own matrix array

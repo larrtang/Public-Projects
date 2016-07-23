@@ -1,10 +1,11 @@
 #include "Matrix.h"
-//Matrix::Matrix () {
-//	matrixArray = (double*) malloc (sizeof(double) * 0);
-//	row = 0;
-//	col = 0;
-//	length = 0;
-//}
+
+Matrix::Matrix () {
+	matrixArray = (double*) malloc (sizeof(double) * 0);
+	row = 0;
+	col = 0;
+	length = 0;
+}
 
 //Matrix::Matrix (const Matrix& m) {
 //	matrixArray = m.getArray();
@@ -131,8 +132,9 @@ void Matrix::printMatrix () {
 			c = 0;
 		}
 		cout << this->getValue(i) << ",";
+		c++;
 	}
-	cout << endl;
+	cout << endl <<endl;
 }
 
 

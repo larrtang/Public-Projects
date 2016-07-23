@@ -62,7 +62,7 @@ bool NeuralNetwork::addOutputLayer (int num_output) {
 
 
 Matrix NeuralNetwork::forwardPropagate (Matrix input_matrix, int currentLayer) {
-	 return input_matrix * this->weightMatrices[currentLayer];
+	return input_matrix * this->weightMatrices[currentLayer];
 }
 
 Matrix NeuralNetwork::evaluate (Matrix input) {
@@ -73,7 +73,10 @@ Matrix NeuralNetwork::evaluate (Matrix input) {
 	
 	Matrix * output = (Matrix*) malloc (sizeof(Matrix));
 	for (int currentLayer = 0; currentLayer < numLayers-1; currentLayer++) {
-		*output = forwardPropagate (*output, currentLayer);
+		if (currentLayer == 0) 
+			*output = forwardPropagate (input, currentLayer);
+		else
+			*output = forwardPropagate (*output, currentLayer);
 		
 		//apply sigmoid function to matrix.
 		for (int i = 0; i < output->getLength(); i++) {
@@ -82,5 +85,7 @@ Matrix NeuralNetwork::evaluate (Matrix input) {
 	}
 	return *output;
 }
+
+
 
 

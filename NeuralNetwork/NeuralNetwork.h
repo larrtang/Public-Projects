@@ -11,20 +11,18 @@
 using namespace std; 
 
 class NeuralNetwork {
-	protected:
-		Matrix input;
-		Matrix output;		
+	protected:	
 		vector <Matrix> weightMatrices;
 		vector <int> layerNeuronCount;	//each index indicates how many neurons are in that layer
-		bool hasInputLayer = false;
-		bool hasOutputLayer = false;
-		int numLayers = 0;
-		int numHiddenLayers = 0;
-		int numInputs = 0;
-		int numOutputs = 0;
+		bool hasInputLayer;
+		bool hasOutputLayer;
+		int numLayers;
+		int numHiddenLayers;
+		int numInputs;
+		int numOutputs;
 		
 	public:
-		//NeuralNetwork ();
+		NeuralNetwork ();
 		//the next 3 functions must be done in  the specific order.
 		void addInputLayer (int num_input);
 		bool addHiddenLayer (int num_hidden);	//can be called multiple times
@@ -37,6 +35,9 @@ class NeuralNetwork {
 		
 		static double sigmoid (double z) {
 			return 1/(1+exp(-z));
+		}
+		static double sigmoid (double z) {
+			return exp(-z)/(pow(1+exp(-z),2));
 		}
 };
 
