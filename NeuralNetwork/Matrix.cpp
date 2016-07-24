@@ -68,15 +68,69 @@ int Matrix::getRow () {return this->row;}
 int Matrix::getCol () {return this->col;}
 int Matrix::getLength () {return this->length;}
 
+void Matrix::randomize (){
+	srand (time(0));
+	for (int i = 0; i < length; i++) {
+		this->setValue(i, rand() %10 - 5);
+	}
+}
+
 double * Matrix::getArray () {return matrixArray;}
 
-Matrix Matrix::transpose (Matrix matrix) {
-	Matrix newMatrix (matrix.getCol(), matrix.getRow());
-	for (int i = 0; i < matrix.getRow(); i++) {
-		for (int j = 0; j < matrix.getCol(); j++) {
-			newMatrix.setValue(j,i, matrix.getValue(i,j));
+Matrix Matrix::transpose () {
+	Matrix newMatrix (getCol(), getRow());
+	for (int i = 0; i < getRow(); i++) {
+		for (int j = 0; j < getCol(); j++) {
+			newMatrix.setValue(j,i, getValue(i,j));
 		}
 	}
+	return newMatrix;
+}
+
+Matrix Matrix::scalarMultiply (double s) {
+	Matrix newMatrix (this->row, this->col);
+	for (int i = 0; i < this->length; i++) {
+		newMatrix.setValue(i, this->getValue(i)*s);
+	}
+	return newMatrix;
+}
+
+Matrix Matrix::scalarMultiply (Matrix matrix) {
+
+	//check if matrices are same size
+	if (this->row != matrix.getRow() || this->col != matrix.getCol()) {
+		cerr << "Matrice's are not the same size." << endl;
+		return Matrix ();
+	}
+	
+	Matrix newMatrix (this->row, this->col);
+	for (int i = 0; i < this->length; i++) {
+		newMatrix.setValue(i, matrix.getValue(i)*this->getValue(i));
+	}
+	return newMatrix;
+}
+
+Matrix Matrix::multiply (Matrix matrix) {
+	//check if the matrices are compatible
+	if (this->col != matrix.row) {
+		cerr <<"Matrices are not compatible." << endl;
+		return Matrix(0,0);
+	}
+	
+	Matrix newMatrix (this->row, matrix.col);
+	int index = 0;
+	
+	for (int r = 0; r < this->row; r++) {
+		for (int c = 0; c < matrix.col; c++) {
+			for (int k = 0; k < this->col; k++) {
+				newMatrix.setValue(index, newMatrix.getValue(index) 
+									+ this->getValue(r,k) 
+									* matrix.getValue(k, c));
+			}
+			index++;
+		}
+	}
+	
 	return newMatrix;
 }
 
@@ -93,6 +147,24 @@ Matrix Matrix::operator + ( Matrix& matrix) {
 	for (int i = 0; i < newMatrix.length; i++) {
 		double sum = this->getValue(i) + matrix.getValue(i);
 		newMatrix.setValue (i, sum);
+	}
+	
+	return newMatrix;
+}
+
+Matrix Matrix::operator - ( Matrix& matrix) {
+	
+	//check if the matrices are the same size
+	if (this->row != matrix.row || this->col != matrix.col) {
+		cerr <<"Matrices are different sizes." << endl;
+		return Matrix(0,0);
+	}	
+	
+	Matrix newMatrix (this->row, this->col);
+	
+	for (int i = 0; i < newMatrix.length; i++) {
+		double diff = this->getValue(i) - matrix.getValue(i);
+		newMatrix.setValue (i, diff);
 	}
 	
 	return newMatrix;

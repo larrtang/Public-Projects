@@ -13,7 +13,11 @@ using namespace std;
 class NeuralNetwork {
 	protected:	
 		vector <Matrix> weightMatrices;
-		vector <int> layerNeuronCount;	//each index indicates how many neurons are in that layer
+		vector <Matrix> gradientChange;
+		vector <int> layerNeuronCount;		//each index indicates how many neurons are in that layer
+		vector <Matrix> z;					//individual z values of layers
+		vector <Matrix> layerOutputs;		//individual outputs of layers
+		vector <Matrix> temp;	
 		bool hasInputLayer;
 		bool hasOutputLayer;
 		int numLayers;
@@ -22,6 +26,8 @@ class NeuralNetwork {
 		int numOutputs;
 		
 	public:
+		double descentMultiplier = 0.01;
+		
 		NeuralNetwork ();
 		//the next 3 functions must be done in  the specific order.
 		void addInputLayer (int num_input);
@@ -32,12 +38,19 @@ class NeuralNetwork {
 		Matrix evaluate (Matrix input);
 		
 		Matrix forwardPropagate (Matrix input_matrix, int currentLayer);
+		void backPropagate (Matrix input, Matrix output, Matrix correct_output);
+		//dJ/dW (matrix of partials)
+		Matrix derrorFunction (Matrix input, Matrix output, Matrix correct_output, int currentLayer, Matrix& delta);
 		
 		static double sigmoid (double z) {
 			return 1/(1+exp(-z));
 		}
-		static double sigmoid (double z) {
-			return exp(-z)/(pow(1+exp(-z),2));
+		static Matrix dsigmoid (Matrix z) {
+			Matrix newMatrix = z;
+			for (int i = 0; i < z.getLength(); i++) {
+				newMatrix.setValue (i, sigmoid(z.getValue(i)));
+			}
+			return newMatrix;
 		}
 };
 
