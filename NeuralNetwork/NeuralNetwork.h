@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <stdbool.h>
+#include <cstdbool>
 
 using namespace std; 
 
@@ -26,15 +26,15 @@ class NeuralNetwork {
 		int numOutputs;
 		
 	public:
-		double descentMultiplier = 0.0001;
-		double gradientThreshold = 0.001; 
+		double descentMultiplier = 0.001;
+		double gradientThreshold = 0.01; 
 		double errorThreshold = 0.1;
 		int maxIteration = 10000;
 		
 		NeuralNetwork ();
 		
 		//the next 3 functions must be done in  the specific order.
-		void addInputLayer (int num_input);
+		bool addInputLayer (int num_input);
 		bool addHiddenLayer (int num_hidden);	//can be called multiple times
 		bool addOutputLayer (int num_output);
 		
@@ -51,10 +51,11 @@ class NeuralNetwork {
 			return 1/(1+exp(-z));
 		}
 		static double dsigmoid (double z) {
-			return exp(-z)/ (pow(1+exp(-z),2));
+			//return exp(-z)/ (pow(1+exp(-z),2));
+			return sigmoid(z) * (1-sigmoid(z));
 		}
 		static Matrix dsigmoid (Matrix z) {
-			Matrix newMatrix = z;
+			Matrix newMatrix (z.getRow(),z.getCol());
 			for (int i = 0; i < z.getLength(); i++) {
 				newMatrix.setValue (i, dsigmoid(z.getValue(i)));
 			}

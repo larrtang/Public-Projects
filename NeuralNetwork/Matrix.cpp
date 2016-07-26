@@ -72,7 +72,7 @@ int Matrix::getLength () {return this->length;}
 void Matrix::randomize (){
 	srand (time(0));
 	for (int i = 0; i < length; i++) {
-		this->setValue(i, rand() %8 - 4);
+		this->setValue(i, rand() %50 - 25);
 	}
 }
 
@@ -201,10 +201,10 @@ void Matrix::printMatrix () {
 	int c = 0;
 	for (int i = 0; i < length; i++) {
 		if (c >= this->col) {
-			cout << endl;
+			cout<< endl;
 			c = 0;
 		}
-		cout << this->getValue(i) << ",";
+		cout << this->getValue(i) << "\t";
 		c++;
 	}
 	cout << endl <<endl;

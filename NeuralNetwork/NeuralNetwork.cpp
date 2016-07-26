@@ -8,17 +8,17 @@ NeuralNetwork::NeuralNetwork() {
 	numHiddenLayers = 0;
 }
 
-void NeuralNetwork::addInputLayer (int num_input) {
+bool NeuralNetwork::addInputLayer (int num_input) {
 	if (hasInputLayer) {
 		cerr <<"Input layer already present." << endl;
-	//	return false;
+		return false;
 	}
 	hasInputLayer = true;
 	numInputs = num_input;
 	numLayers++;
 	layerNeuronCount.push_back(num_input);
 	
-	//return true;
+	return true;
 }
 
 bool NeuralNetwork::addHiddenLayer (int num_hidden) {
@@ -72,31 +72,32 @@ Matrix NeuralNetwork::forwardPropagate (Matrix input_matrix, int currentLayer) {
 
 Matrix NeuralNetwork::evaluate (Matrix input) {
 	z.erase(z.begin(), z.end());
-	
+	layerOutputs.erase(layerOutputs.begin(), layerOutputs.end());
+
 	if (input.getCol() != numInputs) {
 		cerr << "Input matrix does not match input size." << endl;
 		return Matrix(0,0);
 	}
 	
-	Matrix * output = (Matrix*) malloc (sizeof(Matrix));
+	Matrix output;
 	for (int currentLayer = 0; currentLayer < numLayers-1; currentLayer++) {
 		if (currentLayer == 0) 
-			*output = forwardPropagate (input, currentLayer);
+			output = forwardPropagate (input, currentLayer);
 		else
-			*output = forwardPropagate (*output, currentLayer);
+			output = forwardPropagate (output, currentLayer);
 		
 		//save the z values b4 sigmoid
-		z.push_back(*output);
+		z.push_back(output);
 		
 		//apply sigmoid function to matrix.
-		for (int i = 0; i < output->getLength(); i++) {
-			output->setValue(i, sigmoid(output->getValue(i)));
+		for (int i = 0; i < output.getLength(); i++) {
+			output.setValue(i, sigmoid(output.getValue(i)));
 		}
-		
+	
 		//save individual layer output
-		layerOutputs.push_back(*output);
+		layerOutputs.push_back(output);
 	}
-	return *output;
+	return output;
 }
 
 
@@ -161,7 +162,7 @@ Matrix NeuralNetwork::train(Matrix input_train, Matrix output_train) {
 		greatestGradient = 0;
 		
 		output = this->evaluate(input_train);
-		output.printMatrix();
+		//output.printMatrix();
 		backPropagate (input_train, output, output_train);
 
 		//update weights, check if the gradientChange is enough
@@ -176,13 +177,18 @@ Matrix NeuralNetwork::train(Matrix input_train, Matrix output_train) {
 				if (abs(gradientChange[currentLayer].getValue(i)) > greatestGradient) {
 
 					greatestGradient = abs(gradientChange[currentLayer].getValue(i));
+					cout <<&gradientChange[currentLayer]<< "\t" << gradientChange[currentLayer].getValue(i)<< endl;
 				}
 			}
 		}
 		cout << "Iteration " << iteration <<", Highest gradient: " << greatestGradient << endl;
 		
 		iteration++;
+		output = this->evaluate(input_train);
+
 	}
+
+	
 	return output;	
 }
 
