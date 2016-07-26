@@ -72,7 +72,7 @@ int Matrix::getLength () {return this->length;}
 void Matrix::randomize (){
 	srand (time(0));
 	for (int i = 0; i < length; i++) {
-		this->setValue(i, rand() %50 - 25);
+		this->setValue(i, rand() %randomWidth - randomWidth/2);
 	}
 }
 

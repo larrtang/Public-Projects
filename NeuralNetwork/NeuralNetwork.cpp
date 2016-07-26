@@ -126,7 +126,7 @@ Matrix NeuralNetwork::derrorFunction (Matrix input, Matrix output,
 }
 
 void NeuralNetwork::backPropagate (Matrix input, Matrix output, Matrix correct_output) {
-
+	gradientChange.erase(gradientChange.begin(), gradientChange.end());
 	Matrix delta;
 	
 	for (int currentLayer = numLayers-2; currentLayer >= 0; currentLayer--) {

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <cstdbool>
+#include <stdbool.h>
 
 using namespace std; 
 
@@ -26,10 +26,10 @@ class NeuralNetwork {
 		int numOutputs;
 		
 	public:
-		double descentMultiplier = 0.001;
-		double gradientThreshold = 0.01; 
+		double descentMultiplier = 0.1;
+		double gradientThreshold = 0.001; 
 		double errorThreshold = 0.1;
-		int maxIteration = 10000;
+		int maxIteration = 100000;
 		
 		NeuralNetwork ();
 		
