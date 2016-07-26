@@ -115,7 +115,8 @@ Matrix NeuralNetwork::derrorFunction (Matrix input, Matrix output,
 	}
 	//check if input layer or hidden layer
 	else {
-		delta = delta.multiply(weightMatrices[currentLayer+1].transpose()).scalarMultiply(dsigmoid(z[currentLayer]));
+		delta = delta.multiply(weightMatrices[currentLayer+1].transpose());
+		delta = delta.scalarMultiply(dsigmoid(z[currentLayer]));
 		dJdW = input.transpose() * delta;
 	}
 	
@@ -151,18 +152,37 @@ void NeuralNetwork::backPropagate (Matrix input, Matrix output, Matrix correct_o
 
 Matrix NeuralNetwork::train(Matrix input_train, Matrix output_train) {
 
-	Matrix output = evaluate(input_train);
-		
-	backPropagate (input_train, output, output_train);
-
-	//update weights
-	for (int currentLayer = 0; currentLayer < weightMatrices.size(); currentLayer++) {
-		cout<< weightMatrices[currentLayer].getValue(0) <<" "<< gradientChange[currentLayer].getValue(0)<< endl;
-		weightMatrices[currentLayer] = weightMatrices[currentLayer] - gradientChange[currentLayer];
-		
-	}
-	//cout <<"(((((())))))\n";
+	Matrix output;
 	
+	int iteration = 0;
+	double greatestGradient = 100;
+	double greatestError = 100;
+	while (abs(greatestGradient) > this->gradientThreshold && iteration < this->maxIteration) {
+		greatestGradient = 0;
+		
+		output = this->evaluate(input_train);
+		output.printMatrix();
+		backPropagate (input_train, output, output_train);
+
+		//update weights, check if the gradientChange is enough
+		for (int currentLayer = 0; currentLayer < weightMatrices.size(); currentLayer++) {
+		
+			//update the weights
+			weightMatrices[currentLayer] = weightMatrices[currentLayer] - gradientChange[currentLayer];
+			//weightMatrices[currentLayer].printMatrix();
+			//gradientChange[currentLayer].printMatrix();
+			
+			for (int i = 0; i < gradientChange[currentLayer].getLength(); i++) {
+				if (abs(gradientChange[currentLayer].getValue(i)) > greatestGradient) {
+
+					greatestGradient = abs(gradientChange[currentLayer].getValue(i));
+				}
+			}
+		}
+		cout << "Iteration " << iteration <<", Highest gradient: " << greatestGradient << endl;
+		
+		iteration++;
+	}
 	return output;	
 }
 

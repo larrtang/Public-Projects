@@ -26,9 +26,13 @@ class NeuralNetwork {
 		int numOutputs;
 		
 	public:
-		double descentMultiplier = 0.01;
+		double descentMultiplier = 0.0001;
+		double gradientThreshold = 0.001; 
+		double errorThreshold = 0.1;
+		int maxIteration = 10000;
 		
 		NeuralNetwork ();
+		
 		//the next 3 functions must be done in  the specific order.
 		void addInputLayer (int num_input);
 		bool addHiddenLayer (int num_hidden);	//can be called multiple times
@@ -39,16 +43,20 @@ class NeuralNetwork {
 		
 		Matrix forwardPropagate (Matrix input_matrix, int currentLayer);
 		void backPropagate (Matrix input, Matrix output, Matrix correct_output);
+		
 		//dJ/dW (matrix of partials)
 		Matrix derrorFunction (Matrix input, Matrix output, Matrix correct_output, int currentLayer, Matrix& delta);
 		
 		static double sigmoid (double z) {
 			return 1/(1+exp(-z));
 		}
+		static double dsigmoid (double z) {
+			return exp(-z)/ (pow(1+exp(-z),2));
+		}
 		static Matrix dsigmoid (Matrix z) {
 			Matrix newMatrix = z;
 			for (int i = 0; i < z.getLength(); i++) {
-				newMatrix.setValue (i, sigmoid(z.getValue(i)));
+				newMatrix.setValue (i, dsigmoid(z.getValue(i)));
 			}
 			return newMatrix;
 		}

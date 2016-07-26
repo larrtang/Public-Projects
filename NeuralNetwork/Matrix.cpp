@@ -42,8 +42,9 @@ double Matrix::getValue (int x, int y) {
 
 double Matrix::getValue (int i) {
 	if (i >= this->length) {
-		cerr <<"The index you choose was out of bound." << endl;
+		cerr <<"The index you choose was out of bound. Index: " <<i<< ".\n\n" << endl;
 		return 0.0;
+		this->printMatrix();
 	}
 	return matrixArray[i];
 }
@@ -71,7 +72,7 @@ int Matrix::getLength () {return this->length;}
 void Matrix::randomize (){
 	srand (time(0));
 	for (int i = 0; i < length; i++) {
-		this->setValue(i, rand() %10 - 5);
+		this->setValue(i, rand() %8 - 4);
 	}
 }
 
