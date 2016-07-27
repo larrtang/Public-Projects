@@ -47,6 +47,8 @@ bool NeuralNetwork::addOutputLayer (int num_output) {
 		cerr <<"Output layer already present." << endl;
 		return false;	
 	}
+
+	hasOutputLayer = true;
 	numLayers++;
 	numOutputs = num_output;
 	layerNeuronCount.push_back(num_output);
@@ -89,9 +91,9 @@ Matrix NeuralNetwork::evaluate (Matrix input) {
 		//save the z values b4 sigmoid
 		z.push_back(output);
 		
-		//apply sigmoid function to matrix.
+		//apply tanh function to matrix.
 		for (int i = 0; i < output.getLength(); i++) {
-			output.setValue(i, sigmoid(output.getValue(i)));
+			output.setValue(i, tanh(output.getValue(i)));
 		}
 	
 		//save individual layer output
@@ -111,13 +113,13 @@ Matrix NeuralNetwork::derrorFunction (Matrix input, Matrix output,
 	if (currentLayer == numLayers-2) {
 		Matrix difference = correct_output - output;
 		difference = difference.scalarMultiply(-1);
-	 	delta = difference.scalarMultiply(dsigmoid(z[currentLayer]));
+	 	delta = difference.scalarMultiply(dtanh(z[currentLayer]));
 	 	dJdW = input.transpose() * delta;
 	}
 	//check if input layer or hidden layer
 	else {
 		delta = delta.multiply(weightMatrices[currentLayer+1].transpose());
-		delta = delta.scalarMultiply(dsigmoid(z[currentLayer]));
+		delta = delta.scalarMultiply(dtanh(z[currentLayer]));
 		dJdW = input.transpose() * delta;
 	}
 	
@@ -145,11 +147,25 @@ void NeuralNetwork::backPropagate (Matrix input, Matrix output, Matrix correct_o
 		this->gradientChange.push_back (scaledDerrorMatrix);
 	}
 	//reorganize the vector
-	this->temp = this->gradientChange;
+	vector<Matrix> temp = this->gradientChange;
 	for (int i = 0; i < temp.size(); i++) {
 		gradientChange[i] = temp[temp.size()-i-1];
 	}
 }
+
+
+Matrix NeuralNetwork::step_train (Matrix input_train, Matrix output_train) {
+	Matrix output = this->evaluate (input_train);
+	backPropagate (input_train, output, output_train);
+	for (int currentLayer = 0; currentLayer < weightMatrices.size(); currentLayer++) {
+		weightMatrices[currentLayer] = weightMatrices[currentLayer] - gradientChange[currentLayer];
+		weightMatrices[currentLayer].printMatrix();
+	}
+
+	return output;
+}
+
+
 
 Matrix NeuralNetwork::train(Matrix input_train, Matrix output_train) {
 

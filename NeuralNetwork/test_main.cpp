@@ -5,9 +5,6 @@ int main (int argc, char ** argv) {
 	NeuralNetwork neuralNetwork;
 	neuralNetwork.addInputLayer(2);
 	neuralNetwork.addHiddenLayer(3);
-	neuralNetwork.addHiddenLayer(4);
-	neuralNetwork.addHiddenLayer(3);
-	neuralNetwork.addHiddenLayer(2);
 	neuralNetwork.addOutputLayer(1);
 	
 	double data[12*2]  = {10,10,
@@ -27,13 +24,13 @@ int main (int argc, char ** argv) {
 	double data2 [2*2]  = {0,0,
 						10,10};
 						
-	double data3 [7*2]  = {	0,1,
-							0,2,
-							0,3,
-							0,4,
-							0,5,
-							0,6,
-							0,7};					
+	double data3 [7*2]  = {	0,0.1,
+							0,0.2,
+							0,0.3,
+							0,0.4,
+							0,0.5,
+							0,0.6,
+							0,0.7};					
 	Matrix in (7,2, data3);
 	
 	double train[12*1] = {0.9,0.8,0.5,0.7,0.85,0.75,0.6,0.7, 0.55, 0.4,0.9,0.5};

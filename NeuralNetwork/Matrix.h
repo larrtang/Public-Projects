@@ -12,7 +12,7 @@ class Matrix {
 		int row;
 		int col;
 		int length;
-		int randomWidth = 4;
+		static const int randomWidth = 4;
 
 	public:
 		Matrix ();

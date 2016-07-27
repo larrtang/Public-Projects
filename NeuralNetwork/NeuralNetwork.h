@@ -17,7 +17,6 @@ class NeuralNetwork {
 		vector <int> layerNeuronCount;		//each index indicates how many neurons are in that layer
 		vector <Matrix> z;					//individual z values of layers
 		vector <Matrix> layerOutputs;		//individual outputs of layers
-		vector <Matrix> temp;	
 		bool hasInputLayer;
 		bool hasOutputLayer;
 		int numLayers;
@@ -26,7 +25,7 @@ class NeuralNetwork {
 		int numOutputs;
 		
 	public:
-		double descentMultiplier = 0.1;
+		double descentMultiplier = 0.01;
 		double gradientThreshold = 0.001; 
 		double errorThreshold = 0.1;
 		int maxIteration = 100000;
@@ -38,6 +37,7 @@ class NeuralNetwork {
 		bool addHiddenLayer (int num_hidden);	//can be called multiple times
 		bool addOutputLayer (int num_output);
 		
+		Matrix step_train (Matrix input_train, Matrix output_train);
 		Matrix train (Matrix input_train, Matrix output_train);
 		Matrix evaluate (Matrix input);
 		
@@ -61,7 +61,18 @@ class NeuralNetwork {
 			}
 			return newMatrix;
 		}
-};
+
+		static double dtanh(double z) {
+			return 1 - pow (tanh(z), 2);
+		}
+		static Matrix dtanh (Matrix z) {
+			Matrix newMatrix (z.getRow(),z.getCol());
+			for (int i = 0; i < z.getLength(); i++) {
+				newMatrix.setValue (i, dtanh(z.getValue(i)));
+			}
+			return newMatrix;
+		}
+};	
 
 #endif
 
