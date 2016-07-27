@@ -1,5 +1,5 @@
-#ifndef NN_H
-#define NN_H
+#ifndef _NN_H_
+#define _NN_H_
 
 #include "Matrix.h"
 #include <cstdlib>
@@ -23,13 +23,18 @@ class NeuralNetwork {
 		int numHiddenLayers;
 		int numInputs;
 		int numOutputs;
+		static const double GRADIENT_DIFFERENCE_LIMIT 	= 0.0000001;
+		static const double GRADIENT_REVERSAL_LIMIT 	= 0.1;
+
 		
 	public:
-		double descentMultiplier = 0.01;
-		double gradientThreshold = 0.001; 
-		double errorThreshold = 0.1;
-		int maxIteration = 100000;
+		double descentMultiplier 		= 0.01;
+		double step_descentMultiplier 	= 3;
+		double gradientThreshold 		= 0.0001; 
+		double errorThreshold 			= 0.1;
+		int maxIteration 				= 10000;
 		
+
 		NeuralNetwork ();
 		
 		//the next 3 functions must be done in  the specific order.
@@ -51,8 +56,7 @@ class NeuralNetwork {
 			return 1/(1+exp(-z));
 		}
 		static double dsigmoid (double z) {
-			//return exp(-z)/ (pow(1+exp(-z),2));
-			return sigmoid(z) * (1-sigmoid(z));
+			return exp(-z)/ (pow(1+exp(-z),2));
 		}
 		static Matrix dsigmoid (Matrix z) {
 			Matrix newMatrix (z.getRow(),z.getCol());

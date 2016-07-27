@@ -107,24 +107,24 @@ Matrix NeuralNetwork::evaluate (Matrix input) {
 Matrix NeuralNetwork::derrorFunction (Matrix input, Matrix output, 
 										Matrix correct_output, int currentLayer, 
 										Matrix& delta) {
-	Matrix dJdW;
+	Matrix dEdW;
 	
 	//check if output layer
 	if (currentLayer == numLayers-2) {
 		Matrix difference = correct_output - output;
 		difference = difference.scalarMultiply(-1);
 	 	delta = difference.scalarMultiply(dtanh(z[currentLayer]));
-	 	dJdW = input.transpose() * delta;
+	 	dEdW = input.transpose() * delta;
 	}
 	//check if input layer or hidden layer
 	else {
 		delta = delta.multiply(weightMatrices[currentLayer+1].transpose());
 		delta = delta.scalarMultiply(dtanh(z[currentLayer]));
-		dJdW = input.transpose() * delta;
+		dEdW = input.transpose() * delta;
 	}
 	
 	
-	return dJdW;
+	return dEdW;
 }
 
 void NeuralNetwork::backPropagate (Matrix input, Matrix output, Matrix correct_output) {
@@ -167,18 +167,17 @@ Matrix NeuralNetwork::step_train (Matrix input_train, Matrix output_train) {
 
 
 
-Matrix NeuralNetwork::train(Matrix input_train, Matrix output_train) {
-
+Matrix NeuralNetwork::train (Matrix input_train, Matrix output_train) {
 	Matrix output;
 	
 	int iteration = 0;
 	double greatestGradient = 100;
 	double greatestError = 100;
+	double lastGreatestGradient = greatestGradient;
 	while (abs(greatestGradient) > this->gradientThreshold && iteration < this->maxIteration) {
 		greatestGradient = 0;
 		
 		output = this->evaluate(input_train);
-		//output.printMatrix();
 		backPropagate (input_train, output, output_train);
 
 		//update weights, check if the gradientChange is enough
@@ -186,24 +185,28 @@ Matrix NeuralNetwork::train(Matrix input_train, Matrix output_train) {
 		
 			//update the weights
 			weightMatrices[currentLayer] = weightMatrices[currentLayer] - gradientChange[currentLayer];
-			//weightMatrices[currentLayer].printMatrix();
-			//gradientChange[currentLayer].printMatrix();
 			
 			for (int i = 0; i < gradientChange[currentLayer].getLength(); i++) {
 				if (abs(gradientChange[currentLayer].getValue(i)) > greatestGradient) {
-
 					greatestGradient = abs(gradientChange[currentLayer].getValue(i));
-					cout <<&gradientChange[currentLayer]<< "\t" << gradientChange[currentLayer].getValue(i)<< endl;
 				}
 			}
 		}
 		cout << "Iteration " << iteration <<", Highest gradient: " << greatestGradient << endl;
 		
+		//check the difference between largest gradients to prevent them from diverging.
+		if (abs (lastGreatestGradient - greatestGradient) <= this->GRADIENT_DIFFERENCE_LIMIT) {
+			iteration = maxIteration;
+		}
+		lastGreatestGradient = greatestGradient;
 		iteration++;
 		output = this->evaluate(input_train);
 
 	}
 
+	for (int i = 0; i < weightMatrices.size(); i++) {
+		weightMatrices[i].printMatrix();
+	}	
 	
 	return output;	
 }
