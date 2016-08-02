@@ -8,6 +8,10 @@
 #include <cmath>
 #include <stdbool.h>
 
+#define TANH	0
+#define SIG		1
+#define STEP 	2
+
 using namespace std; 
 
 class NeuralNetwork {
@@ -25,18 +29,20 @@ class NeuralNetwork {
 		int numOutputs;
 		static const double GRADIENT_DIFFERENCE_LIMIT 	= 0.0000001;
 		static const double GRADIENT_REVERSAL_LIMIT 	= 0.1;
-
+		int thresholdFunction;
 		
 	public:
-		double descentMultiplier 		= 0.01;
+		double descentMultiplier 		= 0.01; 
 		double step_descentMultiplier 	= 3;
 		double gradientThreshold 		= 0.0001; 
-		double errorThreshold 			= 0.1;
-		int maxIteration 				= 10000;
+		double errorThreshold			= 0.1;
+		int maxIteration				= 10000;
 		
 
 		NeuralNetwork ();
-		
+		NeuralNetwork (int func);
+		void setThresholdFunction (int func);
+
 		//the next 3 functions must be done in  the specific order.
 		bool addInputLayer (int num_input);
 		bool addHiddenLayer (int num_hidden);	//can be called multiple times
@@ -75,6 +81,15 @@ class NeuralNetwork {
 				newMatrix.setValue (i, dtanh(z.getValue(i)));
 			}
 			return newMatrix;
+		}
+
+		static double stepFunc (double z) {
+			if (z > 0)
+				return 1;
+			else if (z < 0)
+				return 0;
+			else 
+				return -1;
 		}
 };	
 

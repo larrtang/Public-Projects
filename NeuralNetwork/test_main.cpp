@@ -1,12 +1,9 @@
 #include "NeuralNetwork.h"
+#include "MatrixBuilder.h"
 #include <cstdio>
 
 int main (int argc, char ** argv) {
-	NeuralNetwork neuralNetwork;
-	neuralNetwork.addInputLayer(2);
-	neuralNetwork.addHiddenLayer(5);
-	neuralNetwork.addOutputLayer(1);
-	
+
 	double data[12*2]  = {10,10,
 						  10,4 ,
 						  2 ,3 ,
@@ -30,72 +27,18 @@ int main (int argc, char ** argv) {
 							0,0.4,
 							0,0.5,
 							0,0.6,
-							0,0.7};					
-	Matrix in (12,2, data);
-	
-	double train[12*1] = {0.9,0.8,0.5,0.7,0.85,0.75,0.6,0.7, 0.55, 0.4,0.9,0.5};
-	double train2 [2*1] = {0.3,0.9};
-	double train3 [7*1] = {0.1,0.2,0.3,0.4,0.5,0.6, 0.7};
-	Matrix c (12, 1, train);
-	
-	
-	
-	while (0) {
-		double a, b;
-		printf ("Input: ");
-		scanf ("%lf %lf",&a, &b);
-		Matrix input (1,2);
-		input.setValue(0,0, a);
-		input.setValue(0,1, b);
-		Matrix output = neuralNetwork.evaluate(input);
-		output.printMatrix();
+							0,0.7};
 
-		double c;
-		printf ("Correct: ");
-		scanf ("%lf",&c);
-		Matrix correct (1,1);
-		correct.setValue(0,0, c);
-		output = neuralNetwork.train(input, correct);
-		output.printMatrix();
-	}
-	
+	Matrix d1 (12, 2, data);
+	MatrixBuilder mb (d1);
 
-	Matrix out = neuralNetwork.train (in, c);
-	cout <<"output:\n";
-	out.printMatrix();
-	
-	
-	Matrix in1 (1,2);
-	in1.setValue(0,0, 0);
-	in1.setValue(0,1, 3);
-	Matrix in2 (1,2);
-	in2.setValue(0,0, 0);
-	in2.setValue(0,1, 6);
-	Matrix out1 = neuralNetwork.evaluate(in1);
-	out1.printMatrix();
-	Matrix out2 = neuralNetwork.evaluate(in2);
-	out2.printMatrix();
-	
-	Matrix test = neuralNetwork.evaluate(in);
-	test.printMatrix();
-	
-	while (1) {
-		double a, b;
-		printf ("Input: ");
-		scanf ("%lf %lf",&a, &b);
-		Matrix input (1,2);
-		input.setValue(0,0, a);
-		input.setValue(0,1, b);
-		Matrix output = neuralNetwork.evaluate(input);
-		output.printMatrix();
+	for (double i = 0; i < 10; i++) {
+		Matrix m (1, 2);
+		m.setValue(0,0, i);
+		m.setValue(0,1, i+1);
 
-		double c;
-		printf ("Correct: ");
-		scanf ("%lf",&c);
-		Matrix correct (1,1);
-		correct.setValue(0,0, c);
-		output = neuralNetwork.step_train(input, correct);
-		output.printMatrix();
+		mb.addRow(m);
+		mb.getMatrix().printMatrix();
 	}
 
 	return 0;

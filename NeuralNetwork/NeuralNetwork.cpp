@@ -6,6 +6,19 @@ NeuralNetwork::NeuralNetwork() {
 	hasOutputLayer = false;
 	numLayers = 0;
 	numHiddenLayers = 0;
+	setThresholdFunction (TANH);
+}
+
+NeuralNetwork::NeuralNetwork(int func) {
+	hasInputLayer = false;
+	hasOutputLayer = false;
+	numLayers = 0;
+	numHiddenLayers = 0;
+	setThresholdFunction (func);
+}
+
+void NeuralNetwork::setThresholdFunction (int func) {
+	this->thresholdFunction = func;
 }
 
 bool NeuralNetwork::addInputLayer (int num_input) {
@@ -91,11 +104,33 @@ Matrix NeuralNetwork::evaluate (Matrix input) {
 		//save the z values b4 sigmoid
 		z.push_back(output);
 		
-		//apply tanh function to matrix.
-		for (int i = 0; i < output.getLength(); i++) {
-			output.setValue(i, tanh(output.getValue(i)));
+		//apply function to matrix.
+		switch (thresholdFunction) {
+			case TANH:
+				for (int i = 0; i < output.getLength(); i++) {
+					output.setValue(i, tanh(output.getValue(i)));
+				}
+				break;
+			
+			case SIG:
+				for (int i = 0; i < output.getLength(); i++) {
+					output.setValue(i, sigmoid(output.getValue(i)));
+				}
+				break;
+			
+			case STEP:
+				if (currentLayer == numLayers-2) {
+					for (int i = 0; i < output.getLength(); i++) {
+						output.setValue(i, stepFunc(output.getValue(i)));
+					}
+				}
+				else {
+					for (int i = 0; i < output.getLength(); i++) {
+						output.setValue(i, sigmoid(output.getValue(i)));
+					}
+				}
+				break;
 		}
-	
 		//save individual layer output
 		layerOutputs.push_back(output);
 	}
