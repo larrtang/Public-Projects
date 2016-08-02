@@ -27,14 +27,13 @@ class NeuralNetwork {
 		int numHiddenLayers;
 		int numInputs;
 		int numOutputs;
-		int randomWidth
 		static const double GRADIENT_DIFFERENCE_LIMIT 	= 0.0000001;
 		static const double GRADIENT_REVERSAL_LIMIT 	= 0.1;
 		int thresholdFunction;
 		
 	public:
-		double descentMultiplier 		= 0.01; 
-		double step_descentMultiplier 	= 3;
+		double descentMultiplier 		= 1; 
+		double step_descentMultiplier 	= 1;
 		double gradientThreshold 		= 0.0001; 
 		double errorThreshold			= 0.1;
 		int maxIteration				= 10000;

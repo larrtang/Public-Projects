@@ -86,6 +86,12 @@ Matrix NeuralNetwork::forwardPropagate (Matrix input_matrix, int currentLayer) {
 
 
 Matrix NeuralNetwork::evaluate (Matrix input) {
+	//check if has input and output
+	if (!hasInputLayer || !hasOutputLayer) {
+		cerr << "Input or output layer not defined." << endl;
+		return Matrix();
+	}
+
 	z.erase(z.begin(), z.end());
 	layerOutputs.erase(layerOutputs.begin(), layerOutputs.end());
 
