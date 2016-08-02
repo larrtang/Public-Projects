@@ -27,6 +27,7 @@ class NeuralNetwork {
 		int numHiddenLayers;
 		int numInputs;
 		int numOutputs;
+		int randomWidth
 		static const double GRADIENT_DIFFERENCE_LIMIT 	= 0.0000001;
 		static const double GRADIENT_REVERSAL_LIMIT 	= 0.1;
 		int thresholdFunction;
@@ -37,7 +38,8 @@ class NeuralNetwork {
 		double gradientThreshold 		= 0.0001; 
 		double errorThreshold			= 0.1;
 		int maxIteration				= 10000;
-		
+		int randomWidth					= 64;
+
 
 		NeuralNetwork ();
 		NeuralNetwork (int func);
@@ -58,6 +60,8 @@ class NeuralNetwork {
 		//dJ/dW (matrix of partials)
 		Matrix derrorFunction (Matrix input, Matrix output, Matrix correct_output, int currentLayer, Matrix& delta);
 		
+		//void setRandomWidth(int w);
+
 		static double sigmoid (double z) {
 			return 1/(1+exp(-z));
 		}
@@ -84,12 +88,17 @@ class NeuralNetwork {
 		}
 
 		static double stepFunc (double z) {
-			if (z > 0)
+			//if (z > 0)
+			//	return 1;
+			//else if (z < 0)
+			//	return 0;
+			//else 
+			//	return -1;
+			double f = sigmoid(z);
+			if (f >= 0.5)
 				return 1;
-			else if (z < 0)
-				return 0;
 			else 
-				return -1;
+				return 0; 
 		}
 };	
 

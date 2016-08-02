@@ -48,7 +48,7 @@ bool NeuralNetwork::addHiddenLayer (int num_hidden) {
 	Matrix layerWeightMatrix (layerNeuronCount[layerNeuronCount.size()-2], 
 								layerNeuronCount[layerNeuronCount.size()-1]);
 	
-	layerWeightMatrix.randomize();
+	layerWeightMatrix.randomize(randomWidth);
 	weightMatrices.push_back(layerWeightMatrix);
 	//note that weightMatrices's size will be one less of layerNeuronCount.
 	
@@ -71,7 +71,7 @@ bool NeuralNetwork::addOutputLayer (int num_output) {
 	Matrix layerWeightMatrix (layerNeuronCount[layerNeuronCount.size()-2], 
 								layerNeuronCount[layerNeuronCount.size()-1]);
 	
-	layerWeightMatrix.randomize();							
+	layerWeightMatrix.randomize(randomWidth);							
 	weightMatrices.push_back(layerWeightMatrix);	
 	
 	return true;
@@ -138,7 +138,6 @@ Matrix NeuralNetwork::evaluate (Matrix input) {
 }
 
 
-
 Matrix NeuralNetwork::derrorFunction (Matrix input, Matrix output, 
 										Matrix correct_output, int currentLayer, 
 										Matrix& delta) {
@@ -148,13 +147,21 @@ Matrix NeuralNetwork::derrorFunction (Matrix input, Matrix output,
 	if (currentLayer == numLayers-2) {
 		Matrix difference = correct_output - output;
 		difference = difference.scalarMultiply(-1);
-	 	delta = difference.scalarMultiply(dtanh(z[currentLayer]));
+
+		//different derivative for different threshold function
+		if (thresholdFunction == TANH)
+	 		delta = difference.scalarMultiply(dtanh(z[currentLayer]));
+		else
+			delta = difference.scalarMultiply(dsigmoid(z[currentLayer]));
 	 	dEdW = input.transpose() * delta;
 	}
 	//check if input layer or hidden layer
 	else {
 		delta = delta.multiply(weightMatrices[currentLayer+1].transpose());
-		delta = delta.scalarMultiply(dtanh(z[currentLayer]));
+		if (thresholdFunction == TANH)
+			delta = delta.scalarMultiply(dtanh(z[currentLayer]));
+		else
+			delta = delta.scalarMultiply(dsigmoid(z[currentLayer]));
 		dEdW = input.transpose() * delta;
 	}
 	
@@ -239,9 +246,9 @@ Matrix NeuralNetwork::train (Matrix input_train, Matrix output_train) {
 
 	}
 
-	for (int i = 0; i < weightMatrices.size(); i++) {
-		weightMatrices[i].printMatrix();
-	}	
+	//for (int i = 0; i < weightMatrices.size(); i++) {
+	//	weightMatrices[i].printMatrix();
+	//}	
 	
 	return output;	
 }

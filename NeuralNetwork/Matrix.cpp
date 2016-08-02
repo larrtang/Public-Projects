@@ -76,6 +76,13 @@ void Matrix::randomize (){
 	}
 }
 
+void Matrix::randomize (int width){
+	srand (time(0));
+	for (int i = 0; i < length; i++) {
+		this->setValue(i, rand() %width - width/2);
+	}
+}
+
 double * Matrix::getArray () {return matrixArray;}
 
 Matrix Matrix::transpose () {

@@ -12,7 +12,7 @@ class Matrix {
 		int row;
 		int col;
 		int length;
-		static const int randomWidth = 6;
+		static const int randomWidth = 64;
 
 	public:
 		Matrix ();
@@ -24,6 +24,7 @@ class Matrix {
 		void setValue (int x, int y, double value);
 		void setValue (int i, double value);
 		void randomize ();
+		void randomize (int width);
 		int getRow();
 		int getCol();
 		int getLength();

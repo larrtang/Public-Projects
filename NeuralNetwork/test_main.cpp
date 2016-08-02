@@ -1,45 +1,40 @@
+/**
+ *	Note: Messing with the descentMultiplier and randomWidth 
+ *	in NeuralNetwork.h can affect your learning accuracy.
+ *	Test out which combinations give you better results.
+ */
+
 #include "NeuralNetwork.h"
 #include "MatrixBuilder.h"
 #include <cstdio>
 
 int main (int argc, char ** argv) {
 
-	double data[12*2]  = {10,10,
-						  10,4 ,
-						  2 ,3 ,
-						  5 , 6,
-						  7 , 6,
-						  10, 0,
-						  0 ,10,
-						   4,10,
-						   3,2 ,
-						   0, 0,
-						   10,10,
-						   2,2};
-	
-	
-	double data2 [2*2]  = {0,0,
-						10,10};
-						
-	double data3 [7*2]  = {	0,0.1,
-							0,0.2,
-							0,0.3,
-							0,0.4,
-							0,0.5,
-							0,0.6,
-							0,0.7};
+	NeuralNetwork * neuralNetwork = new NeuralNetwork(STEP);
 
-	Matrix d1 (12, 2, data);
-	MatrixBuilder mb (d1);
+	//even odd example
 
-	for (double i = 0; i < 10; i++) {
-		Matrix m (1, 2);
-		m.setValue(0,0, i);
-		m.setValue(0,1, i+1);
+	double inputs [8 * 3]  = {0,0,0,
+							  0,0,1,
+							  0,1,0,
+							  0,1,1,
+							  1,0,0,
+							  1,0,1,
+							  1,1,0,
+							  1,1,1};
 
-		mb.addRow(m);
-		mb.getMatrix().printMatrix();
-	}
+    double outputs [8*1] = {1,0,1,0,1,0,1,0};
+
+	neuralNetwork->addInputLayer(3);
+	neuralNetwork->addHiddenLayer(8);
+	neuralNetwork->addHiddenLayer(5);
+	neuralNetwork->addOutputLayer(1);
+
+	MatrixBuilder in (8,3, inputs);
+	MatrixBuilder correct (8,1, outputs);
+
+	Matrix out = neuralNetwork->train(in.getMatrix(), correct.getMatrix());
+	out.printMatrix();
 
 	return 0;
 }

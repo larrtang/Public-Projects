@@ -12,6 +12,11 @@ MatrixBuilder::MatrixBuilder (MatrixBuilder& matrixBuilder) {
     this->matrix = matrixBuilder.getMatrix();
 }
 
+MatrixBuilder::MatrixBuilder (int row, int col, double * values) {
+    Matrix m (row, col, values);
+    this->matrix = m;
+}
+
 void MatrixBuilder::addRow (double values[]) {
     Matrix newMatrix (matrix.getRow() + 1, matrix.getCol());
     for (int r = 0; r < newMatrix.getRow(); r++) {

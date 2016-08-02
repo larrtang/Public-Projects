@@ -10,6 +10,8 @@ class MatrixBuilder {
     public:
         MatrixBuilder ();
         MatrixBuilder (Matrix m);
+        MatrixBuilder (int row, int col, double * values);
+
         MatrixBuilder (MatrixBuilder& matrixBuilder);
 
         void addRow (double values[]);
