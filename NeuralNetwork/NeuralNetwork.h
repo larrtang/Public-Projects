@@ -88,12 +88,6 @@ class NeuralNetwork {
 		}
 
 		static double stepFunc (double z) {
-			//if (z > 0)
-			//	return 1;
-			//else if (z < 0)
-			//	return 0;
-			//else 
-			//	return -1;
 			double f = sigmoid(z);
 			if (f >= 0.5)
 				return 1;
