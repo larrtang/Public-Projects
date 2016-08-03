@@ -33,16 +33,12 @@ public class CalendarActivity extends AppCompatActivity {
         calendar = Calendar.getInstance();
         calendarView.setMinDate(calendar.getFirstDayOfWeek());
         calendarView.setDate(calendar.get(Calendar.DATE));
-        //calendarView.setEnabled(false);
-        //calendarView.scrollTo(calendarView.getScrollX(),calendarView.getScrollY());
 
         Intent intent = getIntent();
         events = (ArrayList<Event>) intent.getSerializableExtra("Events");
     }
 
     public void addEventsToCalendar(){
-        for (Event event : events){
-
-        }
+        // TODO: 8/2/2016 add implementation with event adding 
     }
 }

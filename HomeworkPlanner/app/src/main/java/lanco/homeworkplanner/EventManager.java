@@ -154,10 +154,7 @@ public class EventManager {
 
             bw.close();
         }catch (Exception e){System.err.println(e);}
-
-
     }
-
 
 
     public void deleteData (){
@@ -165,10 +162,5 @@ public class EventManager {
             eventFile.delete();
         }catch (Exception e){System.err.println(e.toString());}
     }
-
-    public void errorPrintFlag(){
-        System.err.println("FLAG******");
-    }
-
 
 }

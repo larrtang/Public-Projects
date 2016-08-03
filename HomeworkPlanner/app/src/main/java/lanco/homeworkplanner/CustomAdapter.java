@@ -26,7 +26,7 @@ public class CustomAdapter extends ArrayAdapter<Event> {
         TextView infoText = (TextView) view.findViewById(R.id.infoText);
 
         eventNameText.setText(getItem(position).event_name);
-        if (getItem(position).realPriority >= RealPriority.alertThreshold){
+        if (getItem(position).realPriority >= RealPriority.ALERT_THRESHOLD){
             eventNameText.setTextColor(Color.RED);
         }
         infoText.setText("Due " + getItem(position).month + "/" + getItem(position).day + "/"+ getItem(position).year + "      (Real Priority: " + getItem(position).realPriority+ ")");

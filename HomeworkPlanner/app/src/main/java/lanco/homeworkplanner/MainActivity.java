@@ -1,78 +1,40 @@
 package lanco.homeworkplanner;
 
-import android.app.ActionBar;
 import android.app.DialogFragment;
-import android.app.FragmentTransaction;
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.CalendarContract;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.ExponentialBackOff;
-
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.client.util.DateTime;
-
-import com.google.api.services.calendar.model.*;
 
 
 public class MainActivity extends AppCompatActivity implements AddHwDialog.NoticeDialogListener {
-
-
     ArrayList<Event> events = new ArrayList<Event>();
-    //Event dummyevent1 = new Event("Test","description",1,12,2016,5f);
-    //Event dummyevent2 = new Event("HW","description",1,9,2016,3f);
+
     ListView listView;
     CustomAdapter listAdapter;
-
     Event selectedEvent;
     EventManager eventManager;
-
-    //EditText eventName2;
-    //EditText eventDescription2;
     Calendar calendar;
-
     GoogleAccountCredential mCredential;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -81,10 +43,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         eventManager = new EventManager(events, getBaseContext());
-
         events = eventManager.getStoredEvents();
         calendar = Calendar.getInstance();
         checkIfEventsPassed();
@@ -102,11 +61,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
                 System.err.println("changed");
                 events.set(pos, editedEvent);
             }
-
         }
-
-
-        System.err.println("onCreate*********" + events.size() + "****************");
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -134,24 +89,15 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
             }
         }).start();
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //addHwDialog.show(getFragmentManager(), "Add Event");
                 Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
                 startActivity(intent);
-
             }
         });
         Calendar calendar = Calendar.getInstance();
         String dir = getFilesDir().toString();
-        //Toast.makeText(getBaseContext(),calendar.get(Calendar.MONTH)+"/"+calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.YEAR),Toast.LENGTH_LONG).show();
-        //Toast.makeText(getBaseContext(),dir,Toast.LENGTH_LONG).show();
-
-
-        //eventManager.storeEvents(events);
     }
 
     public void addEventsToListView() {
@@ -182,41 +128,11 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
         intent.putExtra("Event", selectedEvent);
         intent.putExtra("realPriority", selectedEvent.realPriority);
         startActivity(intent);
-
-                /*setContentView(R.layout.activity_event_info);
-                //LayoutInflater layoutInflater = getLayoutInflater();
-                //View newView = layoutInflater.inflate(R.layout.activity_event_info,null);
-                TextView eventNameTextView;
-                TextView eventDescriptionTextView;
-                TextView dueDate;
-                RatingBar importanceRatingBar;
-                eventNameTextView = (TextView) findViewById(R.id.eventNameTextView);
-                eventDescriptionTextView = (TextView) findViewById(R.id.eventDescriptionTextView);
-                dueDate = (TextView) findViewById(R.id.dueDateTextView);
-                importanceRatingBar = (RatingBar) findViewById(R.id.importanceRatingBar);
-
-                eventNameTextView.setText(selectedEvent.event_name);
-                eventDescriptionTextView.setText(selectedEvent.event_description);
-                dueDate.setText(due_date);
-                importanceRatingBar.setRating(selectedEvent.importance);
-
-                Button okButton = (Button) findViewById(R.id.okbutton);
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setContentView(R.layout.activity_main);
-                        setSupportActionBar(toolbar);
-                        addEventsToListView();
-                    }
-                });
-                */
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //eventManager.storeEvents(events);
     }
 
     @Override
@@ -239,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
             ArrayList<Event> eventArray = (ArrayList<Event>) intent.getSerializableExtra("event array");
             for (int i = 0; i < eventArray.size(); i++) {
                 events.add(eventArray.get(i));
-
             }
             Toast.makeText(getBaseContext(), "Tasks added", Toast.LENGTH_LONG).show();
         }
@@ -257,7 +172,6 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //eventManager.deleteData();
         return true;
     }
 
@@ -278,8 +192,6 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             eventManager.deleteData();
-                            //listAdapter = new CustomAdapter(MainActivity.this, new Event[0]);
-                            //listView.setAdapter(listAdapter);
                             Intent intent = new Intent(MainActivity.this, MainActivity.class);
                             startActivity(intent);
                             Toast.makeText(getBaseContext(), "Deleted Tasks", Toast.LENGTH_LONG).show();
@@ -303,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                         }
                     })
 
@@ -346,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
         if (showNotification) {
             for (int i = 0; i < events.size(); i++) {
                 System.err.println(events.get(i).realPriority);
-                if (events.get(i).realPriority >= RealPriority.alertThreshold) {
+                if (events.get(i).realPriority >= RealPriority.ALERT_THRESHOLD) {
                     System.err.println("One or more tasks are close to their deadline");
                     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.ic_event_white_48dp)
@@ -362,12 +273,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        //Event newEvent = addHwDialog.newEvent();
-        //events.add(newEvent);
         System.err.println("onPosClick*********" + events.size() + "****************");
-        //eventManager.storeEvents(events);
-        //eventManager.storeNewEvent(newEvent);
-
         this.onResume();
     }
 
@@ -378,21 +284,18 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         moveTaskToBack(true);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //eventManager.deleteData();
         eventManager.storeEvents(events);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //eventManager.deleteData();
     }
 
 

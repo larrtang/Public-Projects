@@ -8,10 +8,9 @@ import java.util.Calendar;
  */
 public class RealPriority {
     ArrayList<Event> events;
-    public final float procrastinationRatio = 0.7f;
-    public final float importanceWeight = 6f;
-
-    public static final float alertThreshold = 20f;
+    public static final float PROCRASTINATION_RATIO = 0.7f;
+    public static final float IMPORTANCE_WEIGHT = 6f;
+    public static final float ALERT_THRESHOLD = 20f;
 
     public RealPriority(ArrayList<Event> e) {
         events = e;
@@ -34,15 +33,9 @@ public class RealPriority {
                     events.get(i).timeDistance_inDays
                     - events.get(i).timeToComplete;
 
-
-            //events.get(i).realPriority =
-            //         (events.get(i).importance * importanceWeight)
-            //        / (events.get(i).timeLeft * procrastinationRatio);
-
             events.get(i).realPriority =
-                    importanceWeight / (events.get(i).timeLeft * procrastinationRatio)
+                    IMPORTANCE_WEIGHT / (events.get(i).timeLeft * PROCRASTINATION_RATIO)
                     + events.get(i).importance;
-
         }
     }
 

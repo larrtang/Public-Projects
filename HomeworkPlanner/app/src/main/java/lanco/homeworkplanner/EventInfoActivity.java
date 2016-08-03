@@ -27,8 +27,6 @@ import java.util.Calendar;
 
 public class EventInfoActivity extends AppCompatActivity {
 
-
-
     public Event event;
 
     TextView eventDescriptionTextView;
@@ -49,11 +47,9 @@ public class EventInfoActivity extends AppCompatActivity {
     int day;
     int year;
 
-
     int position;
     boolean wasEdited = false;
     boolean wasDeleted = false;
-
     boolean addingToCalendar = false;
 
     @Override
@@ -65,20 +61,14 @@ public class EventInfoActivity extends AppCompatActivity {
 
         position = getIntent().getIntExtra("position", 0);
 
-
         setTitle(getIntent().getStringExtra("event_name"));
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         event = (Event) getIntent().getSerializableExtra("Event");
-
         month = event.month;
         day = event.day;
         year = event.year;
-
-
-
 
         eventDescriptionTextView = (TextView) findViewById(R.id.eventDescriptionTextView);
         dueDate = (TextView) findViewById(R.id.dueDateTextView);
@@ -87,9 +77,7 @@ public class EventInfoActivity extends AppCompatActivity {
         finishButton = (Button) findViewById(R.id.finishButton);
         realPriorityTextView = (TextView) findViewById(R.id.realPriorityTextView);
 
-
         imageViewDeadline = (ImageView) findViewById(R.id.imageViewDeadline);
-
         calendar = Calendar.getInstance();
 
         imageViewDeadline.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +86,6 @@ public class EventInfoActivity extends AppCompatActivity {
                 new DatePickerDialog(EventInfoActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
-
                         month = view.getMonth() + 1;
                         day = view.getDayOfMonth();
                         year = view.getYear();
@@ -131,7 +118,6 @@ public class EventInfoActivity extends AppCompatActivity {
                 deleteEvent();
             }
         });
-        //eventNameTextView.setText(getIntent().getStringExtra("event_name"));
         if (getIntent().getStringExtra("event_description").equals("")){
             eventDescriptionTextView.setText("(No Description)");
         }
@@ -192,9 +178,7 @@ public class EventInfoActivity extends AppCompatActivity {
         }
         if (item.getItemId() == android.R.id.home){
             System.err.println("home");
-
             eventEdited(wasEdited, wasDeleted);
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -217,7 +201,6 @@ public class EventInfoActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 
 
     public void openTimeNeededDialog(){

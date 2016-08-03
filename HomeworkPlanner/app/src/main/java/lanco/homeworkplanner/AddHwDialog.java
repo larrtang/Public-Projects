@@ -69,25 +69,6 @@ public class AddHwDialog extends DialogFragment {
         view = inflater.inflate(R.layout.addhwdialog0_layout, null);
         builder.setView(view);
 
-
-        //builder.setPositiveButton("OK", null);
-        //builder.setNegativeButton("Cancel", null);
-
-        /*
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button okButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.onDialogPositiveClick(AddHwDialog.this);
-                    }
-                });
-            }
-        });
-        */
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
@@ -99,9 +80,6 @@ public class AddHwDialog extends DialogFragment {
                 mListener.onDialogNegativeClick(AddHwDialog.this);
             }
         });
-
-
-        //return builder.create();
         return dialog;
     }
 

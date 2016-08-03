@@ -29,7 +29,6 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
 public class AddEventActivity extends AppCompatActivity  {
 
     EventManager eventManager;
@@ -39,7 +38,6 @@ public class AddEventActivity extends AppCompatActivity  {
     RatingBar ratingBar;
     TextView dueDateEditText;
     EditText dayEditText;
-    //EditText hourEditText;
     ImageView imageView;
     ImageView imageView7;
     TextView timeNeededText;
@@ -50,15 +48,13 @@ public class AddEventActivity extends AppCompatActivity  {
     int month;
     int day;
     int year;
-    int date;
+
     float timeToComplete = 1f/24f;
 
     boolean isRepeated = false;
     int repeatFor = 1;
 
     Calendar calendar;
-
-    DatePickerFragment datePickerFragment;
 
     Event newEvent = new Event("Failed","",1,1,1,1,1);
 
@@ -79,8 +75,6 @@ public class AddEventActivity extends AppCompatActivity  {
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH)+1;
         year = calendar.get(Calendar.YEAR);
-
-
 
         eventName = (EditText) findViewById(R.id.eventNameEditText);
         eventDescription = (EditText) findViewById(R.id.eventDescriptionEditText);
@@ -103,11 +97,8 @@ public class AddEventActivity extends AppCompatActivity  {
         dueDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                //datePickerFragment = new DatePickerFragment();
-                //datePickerFragment.show(getFragmentManager(), "Date Picker");
                 openDatePickerDialog();
             }
-
         });
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -128,14 +119,6 @@ public class AddEventActivity extends AppCompatActivity  {
                 openTimeNeededDialog();
             }
         });
-
-        /*repeatText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openRepeatDialog();
-            }
-        });
-*/
 
         repeatText.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -168,8 +151,10 @@ public class AddEventActivity extends AppCompatActivity  {
 
             }
 
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+
 
             }
         });
@@ -179,7 +164,6 @@ public class AddEventActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
         dueDateEditText.setText(month+"/"+day+"/"+year);
-
     }
 
     public Event newEvent(){
@@ -188,7 +172,6 @@ public class AddEventActivity extends AppCompatActivity  {
         float rating = ratingBar.getRating();
 
         return new Event(event_name, event_description, month, day, year, rating, timeToComplete);
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -287,9 +270,6 @@ public class AddEventActivity extends AppCompatActivity  {
                 .show();
     }
 
-
-
-
     public void openRepeatDialog (){
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.repeat_dialog, null);
@@ -371,8 +351,6 @@ public class AddEventActivity extends AppCompatActivity  {
                 events.get(i).day = (events.get(i).day + 7*(i)) - maxDay;
 
             }
-            //System.err.println(events.get(i).day);
-
         }
 
         ArrayList<Event> realEventList = new ArrayList<Event>();
@@ -383,9 +361,6 @@ public class AddEventActivity extends AppCompatActivity  {
         }
         eventManager.storeEvents(realEventList);
         Intent intent = new Intent(this, MainActivity.class);
-        //intent.putExtra("added repeated event", true);
-        //intent.putExtra("event array", events);
         startActivity(intent);
-        //finish();
     }
 }
