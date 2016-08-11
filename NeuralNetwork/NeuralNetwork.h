@@ -60,6 +60,10 @@ class NeuralNetwork {
 		Matrix derrorFunction (Matrix input, Matrix output, Matrix correct_output, int currentLayer, Matrix& delta);
 		
 		//void setRandomWidth(int w);
+		
+		//I/O for saving weight files
+		void dumpWeightFile (char* filename);
+		void readWeightFile (char* filename);
 
 		static double sigmoid (double z) {
 			return 1/(1+exp(-z));
