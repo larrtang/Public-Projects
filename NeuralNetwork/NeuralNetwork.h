@@ -30,6 +30,9 @@ class NeuralNetwork {
 		static const double GRADIENT_DIFFERENCE_LIMIT 	= 0.0000001;
 		static const double GRADIENT_REVERSAL_LIMIT 	= 0.1;
 		int thresholdFunction;
+
+		Matrix forwardPropagate (Matrix input_matrix, int currentLayer);
+		void backPropagate (Matrix input, Matrix output, Matrix correct_output);
 		
 	public:
 		double descentMultiplier 		= 1; 
@@ -41,30 +44,37 @@ class NeuralNetwork {
 
 
 		NeuralNetwork ();
+
+		//Call if want to specify a threshold function
 		NeuralNetwork (int func);
+
+
 		void setThresholdFunction (int func);
 
-		//the next 3 functions must be done in  the specific order.
+		/** the next 3 functions must be done in  the specific order.*/
 		bool addInputLayer (int num_input);
+
 		bool addHiddenLayer (int num_hidden);	//can be called multiple times
+
 		bool addOutputLayer (int num_output);
 		
+		//train using one iteration
 		Matrix step_train (Matrix input_train, Matrix output_train);
+
+		//train until error reaches a minimum
 		Matrix train (Matrix input_train, Matrix output_train);
+
+		//evaluate the neural network using input matrix
 		Matrix evaluate (Matrix input);
-		
-		Matrix forwardPropagate (Matrix input_matrix, int currentLayer);
-		void backPropagate (Matrix input, Matrix output, Matrix correct_output);
 		
 		//dJ/dW (matrix of partials)
 		Matrix derrorFunction (Matrix input, Matrix output, Matrix correct_output, int currentLayer, Matrix& delta);
-		
-		//void setRandomWidth(int w);
-		
+				
 		//I/O for saving weight files
 		void dumpWeightFile (char* filename);
 		void readWeightFile (char* filename);
 
+		/** function and function derivatives */
 		static double sigmoid (double z) {
 			return 1/(1+exp(-z));
 		}
