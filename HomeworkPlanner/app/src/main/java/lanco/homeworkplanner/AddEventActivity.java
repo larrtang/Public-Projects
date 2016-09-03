@@ -65,7 +65,8 @@ public class AddEventActivity extends AppCompatActivity  {
         Toolbar toolbar2 = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar2);
         setTitle("Add Task");
-
+           
+        //initialize all the objects in the activity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -93,7 +94,7 @@ public class AddEventActivity extends AppCompatActivity  {
         repeatText.setChecked(isRepeated);
         repeatSeek.setProgress(repeatFor - 2);
         repeatTextView.setText("for " + repeatFor + " week(s)");
-
+        
         dueDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -119,7 +120,8 @@ public class AddEventActivity extends AppCompatActivity  {
                 openTimeNeededDialog();
             }
         });
-
+        
+        
         repeatText.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -139,6 +141,7 @@ public class AddEventActivity extends AppCompatActivity  {
                 }
             }
         });
+        
         repeatSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -165,7 +168,9 @@ public class AddEventActivity extends AppCompatActivity  {
         super.onResume();
         dueDateEditText.setText(month+"/"+day+"/"+year);
     }
-
+    
+    
+    //called when adding new events, happens at the end
     public Event newEvent(){
         String event_name = eventName.getText().toString();
         String event_description = eventDescription.getText().toString();
@@ -212,7 +217,9 @@ public class AddEventActivity extends AppCompatActivity  {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
+    
+    //called after everything is done, changes activities
     public void addNewEvent (){
         newEvent = newEvent();
 
@@ -228,7 +235,8 @@ public class AddEventActivity extends AppCompatActivity  {
 
 
     }
-
+    
+    //set date of the event
     public void openDatePickerDialog(){
         new DatePickerDialog(new ContextThemeWrapper(this,R.style.AppTheme2), new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -332,7 +340,8 @@ public class AddEventActivity extends AppCompatActivity  {
                 })
                 .show();
     }
-
+    
+    //called when adding an event that is repeated
     public void addRepeatedEvent(){
         calendar.set(year,month-1,day);
         int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);

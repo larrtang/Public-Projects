@@ -1,3 +1,12 @@
+/* Author: Larry Tang
+ * 
+ * Homework Planner (Procrast): A program used to manage taskes such as homework an studying, prioritizing
+ *      based on importance, due dates, etc... Sorts the order of completion.
+ *
+ * This is the Starting activity of the app.
+ *
+ */
+
 package lanco.homeworkplanner;
 
 import android.app.DialogFragment;
@@ -27,14 +36,14 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 
 
 public class MainActivity extends AppCompatActivity implements AddHwDialog.NoticeDialogListener {
-    ArrayList<Event> events = new ArrayList<Event>();
+    private ArrayList<Event> events = new ArrayList<Event>();
 
-    ListView listView;
-    CustomAdapter listAdapter;
-    Event selectedEvent;
-    EventManager eventManager;
-    Calendar calendar;
-    GoogleAccountCredential mCredential;
+    private ListView listView;
+    private CustomAdapter listAdapter;
+    private Event selectedEvent;
+    private EventManager eventManager;
+    private Calendar calendar;
+    private GoogleAccountCredential mCredential;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -42,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
         setContentView(R.layout.activity_main);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        
+        //init event manager
         eventManager = new EventManager(events, getBaseContext());
         events = eventManager.getStoredEvents();
         calendar = Calendar.getInstance();
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
             }
         });
         addEventsToListView();
-        updateEventListView();
+        //updateEventListView();
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.hide();
@@ -115,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
     }
 
 
-
+    //called when an event is clicked, moves to that activity 
     public void openEventInfo(Event selectedEvent, int position) {
         Intent intent = new Intent(MainActivity.this, EventInfoActivity.class);
         intent.putExtra("position", position);
@@ -134,7 +144,9 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
     protected void onPause() {
         super.onPause();
     }
-
+    
+    
+    //checks new events are created, and changes to the event list
     @Override
     protected void onResume() {
         super.onResume();
@@ -228,7 +240,8 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
 
         return super.onOptionsItemSelected(item);
     }
-
+    
+    //basically self explanatory 
     public void checkIfEventsPassed() {
         for (int i = 0; i < events.size(); i++) {
             if (events.get(i).year < calendar.get(Calendar.YEAR)) {
@@ -249,7 +262,8 @@ public class MainActivity extends AppCompatActivity implements AddHwDialog.Notic
         }
 
     }
-
+    
+    //manages the notifications sent
     public void checkAlertNotification () {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean showNotification = sharedPref.getBoolean("notification_switch", true);
