@@ -15,7 +15,7 @@
 using namespace std; 
 
 class NeuralNetwork {
-	protected:	
+	private:	
 		vector <Matrix> weightMatrices;
 		vector <Matrix> gradientChange;
 		vector <int> layerNeuronCount;		//each index indicates how many neurons are in that layer
@@ -33,6 +33,41 @@ class NeuralNetwork {
 
 		Matrix forwardPropagate (Matrix input_matrix, int currentLayer);
 		void backPropagate (Matrix input, Matrix output, Matrix correct_output);
+        
+        /** function and function derivatives */
+		static double sigmoid (double z) {
+			return 1/(1+exp(-z));
+		}
+		static double dsigmoid (double z) {
+			return exp(-z)/ (pow(1+exp(-z),2));
+		}
+		static Matrix dsigmoid (Matrix z) {
+			Matrix newMatrix (z.getRow(),z.getCol());
+			for (int i = 0; i < z.getLength(); i++) {
+				newMatrix.setValue (i, dsigmoid(z.getValue(i)));
+			}
+			return newMatrix;
+		}
+
+		static double dtanh(double z) {
+			return 1 - pow (tanh(z), 2);
+		}
+		static Matrix dtanh (Matrix z) {
+			Matrix newMatrix (z.getRow(),z.getCol());
+			for (int i = 0; i < z.getLength(); i++) {
+				newMatrix.setValue (i, dtanh(z.getValue(i)));
+			}
+			return newMatrix;
+		}
+
+		static double stepFunc (double z) {
+			double f = sigmoid(z);
+			if (f >= 0.5)
+				return 1;
+			else 
+				return 0; 
+		}
+		
 		
 	public:
 		double descentMultiplier 		= 1; 
@@ -74,39 +109,7 @@ class NeuralNetwork {
 		void dumpWeightFile (char* filename);
 		void readWeightFile (char* filename);
 
-		/** function and function derivatives */
-		static double sigmoid (double z) {
-			return 1/(1+exp(-z));
-		}
-		static double dsigmoid (double z) {
-			return exp(-z)/ (pow(1+exp(-z),2));
-		}
-		static Matrix dsigmoid (Matrix z) {
-			Matrix newMatrix (z.getRow(),z.getCol());
-			for (int i = 0; i < z.getLength(); i++) {
-				newMatrix.setValue (i, dsigmoid(z.getValue(i)));
-			}
-			return newMatrix;
-		}
-
-		static double dtanh(double z) {
-			return 1 - pow (tanh(z), 2);
-		}
-		static Matrix dtanh (Matrix z) {
-			Matrix newMatrix (z.getRow(),z.getCol());
-			for (int i = 0; i < z.getLength(); i++) {
-				newMatrix.setValue (i, dtanh(z.getValue(i)));
-			}
-			return newMatrix;
-		}
-
-		static double stepFunc (double z) {
-			double f = sigmoid(z);
-			if (f >= 0.5)
-				return 1;
-			else 
-				return 0; 
-		}
+		
 };	
 
 #endif
