@@ -27,6 +27,7 @@ Matrix::Matrix (int x, int y) {
 
 Matrix::~Matrix () {
 	delete [] matrixArray;
+	matrixArray = NULL;
 }
 
 Matrix::Matrix (int x, int y, double * array) {
@@ -48,7 +49,6 @@ double Matrix::getValue (int i) {
 	if (i >= this->length) {
 		cerr <<"The index you choose was out of bound. Index: " <<i<< ".\n\n" << endl;
 		return 0.0;
-		this->printMatrix();
 	}
 	return matrixArray[i];
 }
