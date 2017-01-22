@@ -10,7 +10,7 @@
 
 int main (int argc, char ** argv) {
 
-	NeuralNetwork * neuralNetwork = new NeuralNetwork(STEP);
+	NeuralNetwork * neuralNetwork = new NeuralNetwork(SIG);
 
 	//even odd example
 

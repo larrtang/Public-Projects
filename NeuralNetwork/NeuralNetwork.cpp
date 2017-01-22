@@ -260,3 +260,9 @@ Matrix NeuralNetwork::train (Matrix input_train, Matrix output_train) {
 }
 
 
+void NeuralNetwork::dumpWeightFile (char* filename) {
+
+}
+vector <Matrix> NeuralNetwork::readWeightFile (char* filename) {
+
+}
