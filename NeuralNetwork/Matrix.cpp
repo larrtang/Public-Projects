@@ -1,21 +1,21 @@
 #include "Matrix.h"
 
 Matrix::Matrix () {
-	matrixArray = (double*) malloc (sizeof(double) * 0);
+	matrixArray = new double [0];
 	row = 0;
 	col = 0;
 	length = 0;
 }
 
-//Matrix::Matrix (const Matrix& m) {
-//	matrixArray = m.getArray();
-//	row = m.getRow();
-//	col = m.getCol();
-//	length = m.getRow()*m.getCol();
-//}
+Matrix::Matrix (const Matrix& m) {
+	matrixArray = m.getArray();
+	row = m.getRow();
+	col = m.getCol();
+	length = m.getRow()*m.getCol();
+}
 
 Matrix::Matrix (int x, int y) {
-	matrixArray = (double*) malloc (sizeof(double) * x * y);
+	matrixArray = new double [x*y];
 	row = x;
 	col = y;
 	length = row * col;
@@ -23,6 +23,11 @@ Matrix::Matrix (int x, int y) {
 	for (int i = 0; i < length; i++) {
 		matrixArray[i] = 0;
 	}
+}
+
+Matrix::~Matrix () {
+	delete [] matrixArray;
+	matrixArray = NULL;
 }
 
 Matrix::Matrix (int x, int y, double * array) {
@@ -44,7 +49,6 @@ double Matrix::getValue (int i) {
 	if (i >= this->length) {
 		cerr <<"The index you choose was out of bound. Index: " <<i<< ".\n\n" << endl;
 		return 0.0;
-		this->printMatrix();
 	}
 	return matrixArray[i];
 }
