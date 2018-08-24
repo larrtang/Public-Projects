@@ -1,3 +1,9 @@
+/**
+ * Class: NeuralNetwork
+ * Designed to be a simple implimentation of an Artificial Neural Network used in AI platforms.
+ * Uses the Matrix class as a model for inputs and outputs.
+ */
+
 #ifndef _NN_H_
 #define _NN_H_
 
@@ -6,7 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include <stdbool.h>
+#include <cstdbool>
 
 #define TANH	0
 #define SIG		1
